@@ -1,14 +1,19 @@
 package ua.alegator1209.image_app.ui
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import ua.alegator1209.image_app.R
 import ua.alegator1209.image_app.core.model.Photo
 import ua.alegator1209.image_app.databinding.RecyclerItemPhotoBinding
 
 class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>() {
     private val photos = mutableListOf<Photo>()
+    private val picasso = Picasso.get().also {
+        it.isLoggingEnabled = true
+        it.setIndicatorsEnabled(true)
+    }
 
     fun addPhotos(photos: List<Photo>) {
         val newPhotosStart = photos.lastIndex + 1
@@ -31,11 +36,16 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>() {
         holder.bind(photos[position])
     }
 
-    class PhotoHolder(
+    inner class PhotoHolder(
         private val binding: RecyclerItemPhotoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(photo: Photo) {
-            binding.image.setColorFilter(Color.parseColor(photo.avgColor))
+            picasso.load(photo.src.medium)
+                .resizeDimen(R.dimen.image_size, R.dimen.image_size)
+                .onlyScaleDown()
+                .placeholder(R.drawable.ic_placeholder_image)
+                .error(R.drawable.ic_placeholder_error)
+                .into(binding.image)
         }
     }
 }
