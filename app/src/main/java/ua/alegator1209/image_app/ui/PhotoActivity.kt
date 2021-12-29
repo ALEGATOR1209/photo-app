@@ -3,6 +3,7 @@ package ua.alegator1209.image_app.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PhotoActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Dispatchers.Main)
-    private val adapter = PhotoAdapter()
+    private val adapter by lazy {
+        PhotoAdapter(Glide.with(this))
+    }
 
     private lateinit var binding: ActivityMainBinding
     @Inject lateinit var dataSource: PhotoDataSource
