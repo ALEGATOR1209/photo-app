@@ -1,13 +1,19 @@
 package ua.alegator1209.image_app.ui
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
+import ua.alegator1209.image_app.R
 import ua.alegator1209.image_app.core.model.Photo
 import ua.alegator1209.image_app.databinding.RecyclerItemPhotoBinding
 
-class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>() {
+class PhotoAdapter(
+    private val loader: ImageLoader
+) : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>() {
     private val photos = mutableListOf<Photo>()
 
     fun addPhotos(photos: List<Photo>) {
@@ -31,11 +37,20 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>() {
         holder.bind(photos[position])
     }
 
-    class PhotoHolder(
+    inner class PhotoHolder(
         private val binding: RecyclerItemPhotoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(photo: Photo) {
-            binding.image.setColorFilter(Color.parseColor(photo.avgColor))
+            val request = ImageRequest.Builder(itemView.context)
+                .data(photo.src.original)
+                .crossfade(true)
+                .placeholder(R.drawable.ic_placeholder_image)
+                .error(R.drawable.ic_placeholder_error)
+                .transformations(RoundedCornersTransformation(16F))
+                .target(binding.image)
+                .build()
+
+            loader.enqueue(request)
         }
     }
 }
