@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/image"
-    android:scaleType="center"
-    android:src="@color/teal_200"
     android:padding="8dp"
     android:layout_width="@dimen/image_size"
-    android:layout_height="@dimen/image_size" />
+    android:layout_height="@dimen/image_size"
+    fresco:placeholderImage="@drawable/ic_placeholder_image"
+    fresco:failureImage="@drawable/ic_placeholder_error"
+    fresco:roundedCornerRadius="16dp"/>
