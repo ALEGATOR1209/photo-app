@@ -2,7 +2,7 @@
 <ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image"
-    android:scaleType="center"
+    android:scaleType="centerInside"
     android:src="@color/teal_200"
     android:padding="8dp"
     android:layout_width="@dimen/image_size"
