@@ -3,6 +3,7 @@ package ua.alegator1209.image_app.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,8 @@ class PhotoActivity : AppCompatActivity() {
             it.layoutManager = GridLayoutManager(this, 3)
             it.adapter = adapter
         }
+
+        Fresco.initialize(this)
 
         loadImages()
     }
